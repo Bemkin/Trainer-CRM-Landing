@@ -146,19 +146,23 @@ export default function Home() {
       const canvasRatio = canvas!.width / canvas!.height;
       const imgRatio = img.width / img.height;
       
-      let drawWidth, drawHeight, offsetX, offsetY;
+      let drawWidth, drawHeight;
 
       if (canvasRatio > imgRatio) {
         drawWidth = canvas!.width;
         drawHeight = canvas!.width / imgRatio;
-        offsetX = 0;
-        offsetY = (canvas!.height - drawHeight) / 2;
       } else {
         drawWidth = canvas!.height * imgRatio;
         drawHeight = canvas!.height;
-        offsetX = (canvas!.width - drawWidth) / 2;
-        offsetY = 0;
       }
+
+      // 1.02x zoom and 1% downward shift to hide bottom-edge artifacts
+      const zoom = 1.02;
+      drawWidth *= zoom;
+      drawHeight *= zoom;
+
+      const offsetX = (canvas!.width - drawWidth) / 2;
+      const offsetY = ((canvas!.height - drawHeight) / 2) + (drawHeight * 0.01);
 
       context!.clearRect(0, 0, canvas!.width, canvas!.height);
       context!.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
@@ -215,8 +219,33 @@ export default function Home() {
     };
   }, []);
 
+  const scrollToCTA = () => {
+    document.getElementById('cta-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <main className="relative w-full overflow-x-hidden bg-[#050505] text-white">
+    <>
+      <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 md:px-12 py-8 pointer-events-none">
+        {/* Logo Pill */}
+        <div 
+          className="flex items-center gap-2 cursor-pointer bg-[#030303]/60 backdrop-blur-xl border border-white/10 px-6 py-3 rounded-full pointer-events-auto hover:bg-[#030303]/80 transition-all duration-300"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          <span className="text-white font-bold text-xl tracking-tighter">FitEthio<span className="text-[#00f3ff]">.</span></span>
+        </div>
+
+        {/* Action Pill */}
+        <div className="bg-[#030303]/60 backdrop-blur-xl border border-white/10 p-1.5 rounded-full pointer-events-auto hover:bg-[#030303]/80 transition-all duration-300">
+          <button 
+            onClick={scrollToCTA}
+            className="px-6 py-2.5 text-sm font-bold text-white border border-white/10 rounded-full hover:border-[#00f3ff] hover:text-[#00f3ff] transition-all duration-300"
+          >
+            Join Waitlist
+          </button>
+        </div>
+      </nav>
+
+      <main className="relative w-full overflow-x-hidden bg-[#030303] text-white">
       {/* Pinned Hero Sequence Container */}
       <section id="hero-sequence" className="relative w-full h-[600vh]">
         <div className="sticky-wrapper sticky top-0 w-full h-screen overflow-hidden flex flex-col items-center justify-center">
@@ -248,17 +277,17 @@ export default function Home() {
       </section>
 
       {/* Foreground Content - Visible after unpinning */}
-      <div className="relative w-full z-10 bg-transparent overflow-hidden">
+      <div className="relative w-full z-10 bg-[#030303] overflow-hidden">
         {/* Ambient Background Depth Orbs */}
         <motion.div 
           animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.25, 0.1] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[10%] left-[-10%] w-[500px] h-[500px] bg-[#00f3ff] rounded-full mix-blend-screen filter blur-[120px] opacity-20 pointer-events-none z-0"
+          className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-[#00f3ff] rounded-full mix-blend-screen filter blur-[120px] transform-gpu opacity-20 pointer-events-none z-0"
         />
         <motion.div 
           animate={{ scale: [1, 1.1, 1], opacity: [0.05, 0.15, 0.05] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-          className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#00f3ff] rounded-full mix-blend-screen filter blur-[150px] opacity-10 pointer-events-none z-0"
+          className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#00f3ff] rounded-full mix-blend-screen filter blur-[150px] transform-gpu opacity-10 pointer-events-none z-0"
         />
 
         {/* Feature Matrix (Bento Grid) */}
@@ -313,7 +342,7 @@ export default function Home() {
         </section>
 
         {/* Final Call-To-Action (The Close) */}
-        <section className="relative py-48 px-6 flex flex-col items-center justify-center text-center z-10">
+        <section id="cta-section" className="relative py-48 px-6 flex flex-col items-center justify-center text-center z-10">
           <motion.div
              initial={{ opacity: 0, scale: 0.9 }}
              whileInView={{ opacity: 1, scale: 1 }}
@@ -336,7 +365,8 @@ export default function Home() {
       </div>
 
       {/* Subtle background grain for premium feel */}
-      <div className="pointer-events-none fixed inset-0 z-[100] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]" />
+      <div className="pointer-events-none fixed inset-0 z-[100] bg-[url('data:image/svg+xml,%3Csvg viewBox=%270 0 200 200%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cfilter id=%27noiseFilter%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.65%27 numOctaves=%273%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23noiseFilter)%27/%3E%3C/svg%3E')] opacity-[0.03]" />
     </main>
+    </>
   );
 }
