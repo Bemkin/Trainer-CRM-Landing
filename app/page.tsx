@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import ClientAppScroll from "@/components/ClientAppScroll";
+import IntegrationConstellation from "@/components/IntegrationConstellation";
+import ReviewMarquee from "@/components/ReviewMarquee";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -207,6 +210,13 @@ export default function Home() {
     // 4. Animate Text 3 (Fade In)
     tl.to("#text-3", { opacity: 1, y: 0, duration: 0.15 }, 0.82);
 
+    // 5. Fade out the sticky content at the very end to clear space for the next section
+    tl.to(".sticky-wrapper", { 
+      opacity: 0, 
+      pointerEvents: "none", 
+      duration: 0.1 
+    }, 0.95);
+
     setCanvasSize();
     window.addEventListener("resize", setCanvasSize);
     
@@ -278,6 +288,9 @@ export default function Home() {
 
       {/* Foreground Content - Visible after unpinning */}
       <div className="relative w-full z-10 bg-[#030303] overflow-hidden">
+        {/* Mobile App Scroll Reveal Section */}
+        <ClientAppScroll />
+
         {/* Ambient Background Depth Orbs */}
         <motion.div 
           animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.25, 0.1] }}
@@ -291,7 +304,7 @@ export default function Home() {
         />
 
         {/* Feature Matrix (Bento Grid) */}
-        <section className="relative py-32 px-6 max-w-7xl mx-auto z-10">
+        <section className="relative pt-64 pb-32 px-6 max-w-7xl mx-auto z-10">
           <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-24 tracking-tight">
             Everything you need to <span className="text-[#00f3ff]">scale your empire.</span>
           </h2>
@@ -340,6 +353,10 @@ export default function Home() {
             </GlowCard>
           </motion.div>
         </section>
+
+        <IntegrationConstellation />
+
+        <ReviewMarquee />
 
         {/* Final Call-To-Action (The Close) */}
         <section id="cta-section" className="relative py-48 px-6 flex flex-col items-center justify-center text-center z-10">
