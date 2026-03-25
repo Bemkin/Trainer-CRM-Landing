@@ -56,34 +56,34 @@ export default function ClientAppScroll() {
 
   return (
     <section ref={containerRef} className="relative w-full h-screen bg-[#030303] overflow-hidden">
-      <div className="sticky top-0 w-full h-screen flex flex-col md:flex-row items-center justify-center px-6 md:px-20 gap-12 md:gap-20">
+      <div className="sticky top-0 w-full h-screen flex flex-col md:flex-row items-center justify-center px-6 md:px-20 gap-8 md:gap-20">
         
-        {/* Left Column: Dynamic Copy */}
-        <div className="w-full md:w-1/2 h-[300px] md:h-full flex items-center relative order-2 md:order-1">
-          <div ref={text1Ref} className="absolute inset-x-0 flex flex-col justify-center opacity-0 translate-y-20">
-            <h3 className="text-4xl md:text-7xl font-bold text-white tracking-tighter leading-none">
-              Their entire <span className="text-[#00f3ff]">fitness journey</span>, <br />
+        {/* Dynamic Copy (Responsive Column) */}
+        <div className="w-full md:w-1/2 h-[20vh] md:h-full flex items-center relative order-2 md:order-1 px-4 md:px-0 -mt-12 md:mt-0">
+          <div ref={text1Ref} className="absolute inset-x-4 md:inset-x-0 flex flex-col justify-center opacity-0 translate-y-20">
+            <h3 className="text-3xl md:text-7xl font-bold text-white tracking-tighter leading-none">
+              Their entire <span className="text-[#00f3ff]">fitness journey</span>, <br className="hidden md:block" />
               in their pocket.
             </h3>
           </div>
-          <div ref={text2Ref} className="absolute inset-x-0 flex flex-col justify-center opacity-0 translate-y-20">
-            <h3 className="text-4xl md:text-7xl font-bold text-white tracking-tighter leading-none">
-              Frictionless <span className="text-[#00f3ff]">workout logging</span> <br />
+          <div ref={text2Ref} className="absolute inset-x-4 md:inset-x-0 flex flex-col justify-center opacity-0 translate-y-20">
+            <h3 className="text-3xl md:text-7xl font-bold text-white tracking-tighter leading-none">
+              Frictionless <span className="text-[#00f3ff]">logbook</span> <br className="hidden md:block" />
               & 1RM tracking.
             </h3>
           </div>
-          <div ref={text3Ref} className="absolute inset-x-0 flex flex-col justify-center opacity-0 translate-y-20">
-            <h3 className="text-4xl md:text-7xl font-bold text-white tracking-tighter leading-none">
-              Direct <span className="text-[#00f3ff]">messaging</span> that <br />
-              cuts out the noise.
+          <div ref={text3Ref} className="absolute inset-x-4 md:inset-x-0 flex flex-col justify-center opacity-0 translate-y-20">
+            <h3 className="text-3xl md:text-7xl font-bold text-white tracking-tighter leading-none">
+              Direct <span className="text-[#00f3ff]">messaging</span> that <br className="hidden md:block" />
+              cuts the noise.
             </h3>
           </div>
         </div>
 
-        {/* Right Column: iPhone Chassis */}
-        <div className="w-full md:w-1/2 flex justify-center items-center relative order-1 md:order-2">
-          {/* Device Aura (Radial Background Glow) */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[400px] bg-[#00f3ff] rounded-full mix-blend-screen filter blur-[120px] opacity-20 pointer-events-none z-0" />
+        {/* iPhone Chassis (Responsive Column) */}
+        <div className="w-full md:w-1/2 flex justify-center items-center relative order-1 md:order-2 scale-[0.75] md:scale-100">
+          {/* Device Aura */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[400px] bg-[#00f3ff] rounded-full mix-blend-screen filter blur-[100px] opacity-20 pointer-events-none z-0" />
 
           {/* Device Wrapper */}
           <div className="relative w-[360px] h-[730px] flex items-center justify-center rounded-[3rem]">
@@ -95,7 +95,7 @@ export default function ClientAppScroll() {
             />
             
             {/* Screen Mask (Bottom Layer) */}
-            <div className="absolute top-[2%] bottom-[1.5%] left-[4.5%] right-[4.5%] z-10 overflow-hidden rounded-[2.5rem] bg-[#050505]">
+            <div className="absolute top-[4.5%] md:top-[2%] bottom-[4%] md:bottom-[1.5%] left-[4.5%] right-[4.5%] z-10 overflow-hidden rounded-[2.5rem] bg-[#050505]">
               {/* Sliding Track */}
               <div ref={phoneTrackRef} className="w-[300%] h-full flex">
                 {/* Screen 1: Workout Logging */}

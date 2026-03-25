@@ -6,6 +6,8 @@ import { ArrowRight } from "lucide-react";
 import ClientAppScroll from "@/components/ClientAppScroll";
 import IntegrationConstellation from "@/components/IntegrationConstellation";
 import ReviewMarquee from "@/components/ReviewMarquee";
+import MorphingCTA from "@/components/MorphingCTA";
+import Preloader from "@/components/Preloader";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -51,64 +53,6 @@ function GlowCard({ children, className = "" }: { children: React.ReactNode; cla
   );
 }
 
-// Elite Morphing CTA Component
-function MorphingCTA() {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  return (
-    <div className="relative flex items-center justify-center w-full">
-      <AnimatePresence mode="wait">
-        {!isExpanded ? (
-          <motion.div
-            key="button"
-            layoutId="cta-container"
-            className="relative group"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-          >
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#00f3ff] to-[#0066ff] rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-            <button 
-              onClick={() => setIsExpanded(true)}
-              className="relative px-12 py-6 bg-[#00f3ff] text-black text-xl font-black rounded-full hover:bg-white transition-all duration-500 shadow-[0_0_40px_rgba(0,243,255,0.4)] scale-100 hover:scale-105 active:scale-95 uppercase tracking-widest"
-            >
-              Join the Exclusive Waitlist
-            </button>
-          </motion.div>
-        ) : (
-          <motion.form
-            key="input"
-            layoutId="cta-container"
-            onSubmit={(e) => {
-              e.preventDefault();
-              // Handle submission logic here
-              alert("Subscribed!");
-              setIsExpanded(false);
-            }}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="flex items-center w-full max-w-lg bg-black/40 border border-[#00f3ff] p-2 rounded-full shadow-[0_0_40px_rgba(0,243,255,0.2)] backdrop-blur-3xl overflow-hidden"
-          >
-            <input 
-              type="email" 
-              placeholder="Enter your best email..." 
-              required 
-              autoFocus
-              className="flex-1 bg-transparent border-none text-white placeholder-gray-500 px-6 focus:outline-none focus:ring-0 text-lg"
-            />
-            <button 
-              type="submit" 
-              className="p-4 bg-[#00f3ff] text-black rounded-full hover:bg-white transition-all duration-300 group"
-            >
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </motion.form>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -235,6 +179,7 @@ export default function Home() {
 
   return (
     <>
+      <Preloader />
       <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 md:px-12 py-8 pointer-events-none">
         {/* Logo Pill */}
         <div 
@@ -358,27 +303,7 @@ export default function Home() {
 
         <ReviewMarquee />
 
-        {/* Final Call-To-Action (The Close) */}
-        <section id="cta-section" className="relative py-48 px-6 flex flex-col items-center justify-center text-center z-10">
-          <motion.div
-             initial={{ opacity: 0, scale: 0.9 }}
-             whileInView={{ opacity: 1, scale: 1 }}
-             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-             viewport={{ once: true }}
-             className="max-w-5xl"
-          >
-            <h2 className="text-6xl md:text-8xl font-black text-white mb-12 tracking-tighter leading-none">
-              Stop guessing. <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f3ff] to-[#0066ff]">Start scaling.</span>
-            </h2>
-            
-            <MorphingCTA />
-            
-            <p className="mt-10 text-gray-500 font-medium tracking-widest uppercase text-xs">
-              Spots are strictly limited for the V1 rollout.
-            </p>
-          </motion.div>
-        </section>
+        <MorphingCTA />
       </div>
 
       {/* Subtle background grain for premium feel */}
